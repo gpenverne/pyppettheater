@@ -21,3 +21,5 @@ RUN sudo /usr/bin/python3.5 -m pip install -r /requirements.txt
 # copy puppeteer test utils
 COPY lib/* /puppeteer/
 RUN ln -s /puppeteer/puppeteer.py /usr/bin/puppeteer
+
+RUN pyppeteer-install
