@@ -18,8 +18,8 @@ ENV DISPLAY=:99
 COPY requirements.txt /requirements.txt
 RUN sudo /usr/bin/python3.5 -m pip install -r /requirements.txt
 
+RUN pyppeteer-install
+
 # copy puppeteer test utils
 COPY lib/* /puppeteer/
 RUN ln -s /puppeteer/puppeteer.py /usr/bin/puppeteer
-
-RUN pyppeteer-install

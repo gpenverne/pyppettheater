@@ -43,7 +43,7 @@ class Test:
                 self.logger.info('\t (•‿•) '+scenario['title']['content']+'\n\n')
             else:
                 await self.take_a_screenshot()
-                self.logger.info('\tA screenshot is available for debug ('+os.path.dirname(os.path.realpath(__file__))+'/screenshot.png)')
+                self.logger.info('\tA screenshot is available for debug (screenshot.png)')
                 sys.exit(1)
 
     async def setPage(self):
@@ -57,7 +57,7 @@ class Test:
 
     # Take a screenshot
     async def take_a_screenshot(self):
-        await self.page.screenshot({'path': 'screenshot.png'})
+        await self.page.screenshot({'path': '/scenarios/screenshot.png'})
 
     # I should be on "http://myurl"
     async def i_should_be_on(self, url):
@@ -84,3 +84,13 @@ class Test:
         text = await self.page.evaluate('(element) => element.textContent', dom_element);
         if text != content:
             raise Exception ('Content of '+field_query_selector+' should be "' + str(content) + '", found "'+str(text)+'"')
+
+    # The element "#element" should not exist
+    async def the_element_should_not_exist(self, field_query_selector):
+        if await self.page.querySelector(field_query_selector) != None:
+            raise Exception ('Element "'+field_query_selector+'" has been found in the DOM, but it should not')
+
+    # The element "#element" should exist
+    async def the_element_should_exist(self, field_query_selector):
+        if await self.page.querySelector(field_query_selector) == None:
+            raise Exception ('Element "'+field_query_selector+'" has not been found in the DOM, but it should')

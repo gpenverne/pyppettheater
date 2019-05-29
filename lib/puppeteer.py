@@ -20,7 +20,7 @@ def test_features(current_path):
     for test in tests:
         asyncio.get_event_loop().run_until_complete(test.start())
 
-current_path = str('/scenarios/' + os.path.realpath(sys.argv[1])).replace('//', '/')
+current_path = str('/scenarios/' + sys.argv[1]).replace('//', '/')
 if not os.path.exists(current_path):
     logger.critical(current_path+' does not exists')
     exit(1)

@@ -70,7 +70,9 @@ Feature: Create an account on a game
 - I type "something" in field "#query"
 - I click on "#item"
 - The element "#element" should have "some content" as content
-
+- The element "#element" should not exists
+- The element "#element" should exists
+- 
 If you need or want other sentences, open an issue :)
 
 ## Known limitations
