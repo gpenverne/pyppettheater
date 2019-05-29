@@ -1,23 +1,22 @@
 from pyppeteer import launch
-import logger
 from gherkin_parser.parser import parse_from_filename, parse_file, parse_lines
-import os, sys, yaml
-import asyncio
+import asyncio, coloredlogs, logging, os, sys, yaml
 
 class Test:
     def __init__(self, feature_file_name):
         self.page = None
-        self.logger = logger.Logger()
+        self.logger = logging.getLogger(__name__)
+        coloredlogs.install(level='DEBUG', logger=self.logger)
         self.feature = parse_from_filename(feature_file_name)
 
     async def start(self):
         await self.setPage()
         success = True
-        self.logger.message('Feature: ' + self.feature['title']['content'])
-        self.logger.message('===========================')
+        self.logger.info('Feature: ' + self.feature['title']['content'])
+        self.logger.info('===========================')
         for scenario in self.feature['scenarios']:
-            self.logger.message('\tScenario: ' + scenario['title']['content'])
-            self.logger.message('\t---------------------------')
+            self.logger.info('\tScenario: ' + scenario['title']['content'])
+            self.logger.info('\t---------------------------')
             for step in scenario['steps']:
                 stepTitle = step['title']['content'].replace('\#', '#')
                 array = stepTitle.split('"')
@@ -33,18 +32,18 @@ class Test:
                         is_opening_quote = True
                 try:
                     await getattr(self, func_name.replace(' ', '_'))(*args)
-                    self.logger.info("\t✅"+stepTitle)
+                    self.logger.info('\t✅'+stepTitle)
                 except Exception as e:
-                    self.logger.error("\t❌"+stepTitle+"\n")
-                    self.logger.error(str(e)+"\n\n")
+                    self.logger.error('\t❌'+stepTitle+'\n')
+                    self.logger.critical(str(e)+'\n\n')
                     success = False
                     break
 
             if success:
-                self.logger.success('\t (•‿•) '+scenario['title']['content']+'\n\n')
+                self.logger.info('\t (•‿•) '+scenario['title']['content']+'\n\n')
             else:
                 await self.take_a_screenshot()
-                self.logger.info("\tA screenshot is available for debug")
+                self.logger.info('\tA screenshot is available for debug ('+os.path.dirname(os.path.realpath(__file__))+'/screenshot.png)')
                 sys.exit(1)
 
     async def setPage(self):

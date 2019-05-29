@@ -1,0 +1,5 @@
+pyppeteer
+asyncio
+gherkin-parser
+pyyaml
+coloredlogs

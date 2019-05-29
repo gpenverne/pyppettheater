@@ -15,7 +15,7 @@ RUN unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
 ENV DISPLAY=:99
 
 # install pupeteer dependencies
-RUN sudo /usr/bin/python3.5 -m pip install pyppeteer asyncio colorama gherkin-parser pyyaml
+RUN sudo /usr/bin/python3.5 -m pip install pyppeteer asyncio gherkin-parser pyyaml coloredlogs
 
 # copy puppeteer test utils
 COPY lib/* /puppeteer/
