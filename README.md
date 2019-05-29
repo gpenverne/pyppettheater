@@ -1,6 +1,6 @@
 # Pyppettheater
 
-Using puppeteer, docker, and python-ghenkins-parser, you can easilly write functionnal tests using ghenkins syntax.
+Using puppeteer, docker, and python-gherkin-parser, you can easilly write functionnal tests using gherkin syntax.
 
 ## Use with docker-compose
 Just add a service using this image in your ``docker-compose.yml``:
@@ -41,8 +41,8 @@ scenarios:
     0: my-features/my-feature.feature
     2: my-features/my-other-feature.feature
 ```
-Each ``.feature`` is a ghenkins file which contains scenarios about your feature:
-```ghenkins
+Each ``.feature`` is a gherkin file which contains scenarios about your feature:
+```gherkin
 Feature: Create an account on a game
 
 	Scenario: As a visitor, I register on the game
@@ -74,4 +74,4 @@ If you need or want other sentences, open an issue :)
 
 ## Known limitations
 - Each feature is session independant: if you are logged in one .feature, you will not be logged in another one
-- Because of ghenkins comments, you have to escape ``#`` selectores with a ``\``
+- Because of gherkin comments, you have to escape ``#`` selectores with a ``\``
