@@ -1,5 +1,7 @@
 # Pyppettheater
 
+Using puppeteer, docker, and python-ghenkins-parser, you can easilly write functionnal tests using ghenkins syntax.
+
 ## Use with docker-compose
 Just add a service using this image in your ``docker-compose.yml``:
 ```yaml
