@@ -75,4 +75,4 @@ If you need or want other sentences, open an issue :)
 
 ## Known limitations
 - Each feature is session independant: if you are logged in one .feature, you will not be logged in another one
-- Because of gherkin comments, you have to escape ``#`` selectores with a ``\``
+- Because of gherkin comments, you have to escape ``#`` selectors with a ``\``
