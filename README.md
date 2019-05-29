@@ -9,8 +9,8 @@ tests:
         - ./tests/scenarios:/scenarios
     working_dir: /
     links:
-      - "site:jcray.com"
-      - "site:a-strategy-game-by-jeancive2.jcray.com"
+      - "other-container-name:my-site.com"
+      - "another-container-name:a-sub-domain-website"
     stdin_open: true
     tty: true
 ```
