@@ -44,7 +44,7 @@ class Test:
                 self.logger.info('\t (•‿•) '+scenario['title']['content']+'\n\n')
             else:
                 await self.take_a_screenshot()
-                self.logger.info('\tA screenshot is available for debug (screenshot.png)')
+                self.logger.info('\tA screenshot is available for debug (/tmp/screenshot.png)')
                 sys.exit(1)
 
     async def setPage(self):
@@ -58,7 +58,7 @@ class Test:
 
     # Take a screenshot
     async def take_a_screenshot(self):
-        await self.page.screenshot({'path': '/scenarios/screenshot.png'})
+        await self.page.screenshot({'path': '/tmp/screenshot.png'})
 
     # I should be on "http://myurl"
     async def i_should_be_on(self, url):
