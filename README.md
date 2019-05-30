@@ -32,8 +32,8 @@ Adjust the ``volumes`` section as your need, to put your scenario folder in the 
 
 To run your tests suites, just run
 ```bash
-docker-compose run tests puppeteer /scenarios/my-suite.yml
-docker-compose run tests puppeteer /scenarios/my-features/my-scenario.feature
+docker-compose run tests pyppettheater /scenarios/my-suite.yml
+docker-compose run tests pyppettheater /scenarios/my-features/my-scenario.feature
 ```
 
 

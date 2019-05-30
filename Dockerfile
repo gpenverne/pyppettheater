@@ -22,4 +22,4 @@ RUN pyppeteer-install
 
 # copy puppeteer test utils
 COPY lib/* /puppeteer/
-RUN ln -s /puppeteer/puppeteer.py /usr/bin/puppeteer
+RUN ln -s /puppeteer/pyppettheater.py /usr/bin/pyppettheater
