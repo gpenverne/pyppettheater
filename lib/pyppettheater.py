@@ -94,3 +94,24 @@ class Test:
     async def the_element_should_exist(self, field_query_selector):
         if await self.page.querySelector(field_query_selector) == None:
             raise Exception ('Element "'+field_query_selector+'" has not been found in the DOM, but it should')
+
+def run_feature_file(feature_file_path):
+    return asyncio.get_event_loop().run_until_complete(Test(feature_file_path).start())
+
+def run_yml(yml_path):
+    current_dir = os.path.dirname(yml_path)
+    with open(yml_path, 'r') as stream:
+        try:
+            tests = []
+            scenarios = yaml.safe_load(stream)
+            for key, scenario in scenarios['scenarios'].items():
+                run_feature_file(os.path.join(current_dir, scenario))
+        except yaml.YAMLError as exc:
+            print(exc)
+            quit()
+
+def run_test(path):
+    if ".feature" in path:
+        run_test(path)
+    else:
+        run_yml(path)
