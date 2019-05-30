@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 from pyppeteer import launch
 from gherkin_parser.parser import parse_from_filename, parse_file, parse_lines
 import asyncio, coloredlogs, logging, os, sys, yaml
@@ -110,8 +111,16 @@ def run_yml(yml_path):
             print(exc)
             quit()
 
-def run_test(path):
-    if ".feature" in path:
-        run_test(path)
+def run_test(scenario_path):
+    if not os.path.exists(scenario_path):
+        logger = logging.getLogger(__name__)
+        coloredlogs.install(level='DEBUG', logger=logger)
+        logger.critical(scenario_path+' does not exists')
+        exit(1)
+
+    if ".feature" in scenario_path:
+        run_test(scenario_path)
     else:
-        run_yml(path)
+        run_yml(scenario_path)
+
+run_test(sys.argv[1])

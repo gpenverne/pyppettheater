@@ -2,6 +2,18 @@
 
 Using puppeteer, docker, and python-gherkin-parser, you can easilly write functionnal tests using gherkin syntax.
 
+## Use as binary script
+Install it:
+```bash
+$ python3 install -r requirements.txt
+$ cp lib/pyppettheater.py /usr/bin/pyppettheater
+```
+
+And use it:
+```bash
+$ /usr/bin/pyppettheater "/path/to/my/yml/file"
+```
+
 ## Use with docker-compose
 Just add a service using this image in your ``docker-compose.yml``:
 ```yaml
@@ -20,8 +32,8 @@ Adjust the ``volumes`` section as your need, to put your scenario folder in the 
 
 To run your tests suites, just run
 ```bash
-docker-compose run tests puppeteer my-suite.yml
-docker-compose run tests puppeteer my-features/my-scenario.feature
+docker-compose run tests puppeteer /scenarios/my-suite.yml
+docker-compose run tests puppeteer /scenarios/my-features/my-scenario.feature
 ```
 
 
@@ -72,7 +84,7 @@ Feature: Create an account on a game
 - The element "#element" should have "some content" as content
 - The element "#element" should not exists
 - The element "#element" should exists
-- 
+-
 If you need or want other sentences, open an issue :)
 
 ## Known limitations
