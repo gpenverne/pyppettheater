@@ -86,7 +86,7 @@ An actor is a python class which handle sentends. By default the ``Dom`` actor i
 - The element "#element" should not exists
 - The element "#element" should exists
 
-If you need or want other sentences, open an issue :)
+If you need or want other sentences, open an issue or create a custom actor :)
 
 To load custom actors, you can add a "Actors" section in your yml file, with all relatives paths to your actors classes:
 ```yaml
