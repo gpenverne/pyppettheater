@@ -75,7 +75,8 @@ Feature: Create an account on a game
 		And the element "\#quantity-for-3" should have "1000" as content
 ```
 
-## All sentences usable
+## About actors
+An actor is a python class which handle sentends. By default the ``Dom`` actor is loaded which can handle these sentences:
 - I go on "http://myurl"
 - Take a screenshot
 - I should be on "http://myurl"
@@ -84,8 +85,16 @@ Feature: Create an account on a game
 - The element "#element" should have "some content" as content
 - The element "#element" should not exists
 - The element "#element" should exists
--
+
 If you need or want other sentences, open an issue :)
+
+To load custom actors, you can add a "Actors" section in your yml file, with all relatives paths to your actors classes:
+```yaml
+actors:
+    - "../actors/custom_actor.py"
+```
+
+You can find a sample actor class in the ``actors/custom_actor.py`` file in this repository
 
 ## Known limitations
 - Each feature is session independant: if you are logged in one .feature, you will not be logged in another one
