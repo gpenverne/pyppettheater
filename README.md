@@ -74,7 +74,7 @@ Feature: Create an account on a game
 ```
 
 ## About actors
-An actor is a python class which handle sentends. By default the ``Dom`` actor is loaded which can handle these sentences:
+An actor is a python class which handle sentences. By default the ``Dom`` actor is loaded which can handle these sentences:
 
 ### DOM - navigation
 - I go on "http://myurl"
@@ -140,3 +140,6 @@ actors:
 ## Known limitations
 - Each feature is session independant: if you are logged in one .feature, you will not be logged in another one
 - Because of gherkin comments, you have to escape ``#`` selectors with a ``\``
+
+## Sample scenarios and yml files
+(Tests on this repo)[https://github.com/gpenverne/pyppettheater/tree/master/tests/]
