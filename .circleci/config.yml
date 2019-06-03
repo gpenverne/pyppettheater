@@ -22,14 +22,12 @@ jobs:
           keys:
             - vendor-{{ checksum "requirements.txt" }}
       - run:
-          command: |
-              mysql -uroot -proot -h127.0.0.1 < tests/mysql/data.sql
-      - run:
            name: Functionnals tests
            command: |
+            mysql -uroot -proot -h127.0.0.1 < tests/mysql/data.sql
             cp -R ./tests /scenarios
-            pyppettheater /scenarios/mysql.yml
-            pyppettheater /scenarios/rest.yml
+            pyppet_theater /scenarios/rest.yml
+            pyppet_theater /scenarios/mysql.yml
       - save_cache:
           key: vendor-{{ checksum "requirements.txt" }}
           paths:

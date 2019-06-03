@@ -2,7 +2,9 @@
 from pyppeteer import launch
 from gherkin_parser.parser import parse_from_filename, parse_file, parse_lines
 import asyncio, coloredlogs, imp, logging, os, sys, yaml
-from actors import *
+from .dom import Actor as DomActor
+from .mysql import Actor as MysqlActor
+from .rest import Actor as RestActor
 
 class Pyppetheater:
     actors = []
@@ -122,4 +124,5 @@ def run_test(scenario_path):
     else:
         run_yml(scenario_path)
 
-run_test(sys.argv[1])
+if __name__ == "__main__":
+    run_test(sys.argv[1])

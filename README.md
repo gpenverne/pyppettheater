@@ -5,13 +5,12 @@ Using puppeteer, docker, and python-gherkin-parser, you can easilly write functi
 ## Use as binary script
 Install it:
 ```bash
-$ python3 install -r requirements.txt
-$ cp lib/pyppettheater.py /usr/bin/pyppettheater
+$ pip3 install Pyppetheater
 ```
 
 And use it:
 ```bash
-$ /usr/bin/pyppettheater "/path/to/my/yml/file"
+$ pyppet_theater "/path/to/my-yml-or-feature-file"
 ```
 
 ## Use with docker-compose
@@ -32,8 +31,8 @@ Adjust the ``volumes`` section as your need, to put your scenario folder in the 
 
 To run your tests suites, just run
 ```bash
-docker-compose run tests pyppettheater /scenarios/my-suite.yml
-docker-compose run tests pyppettheater /scenarios/my-features/my-scenario.feature
+docker-compose run tests pyppet_theater /scenarios/my-suite.yml
+docker-compose run tests pyppet_theater /scenarios/my-features/my-scenario.feature
 ```
 
 ## Writing scenarios
