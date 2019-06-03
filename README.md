@@ -36,7 +36,6 @@ docker-compose run tests pyppettheater /scenarios/my-suite.yml
 docker-compose run tests pyppettheater /scenarios/my-features/my-scenario.feature
 ```
 
-
 ## Writing scenarios
 Sample folders tree:
 ```
@@ -77,6 +76,8 @@ Feature: Create an account on a game
 
 ## About actors
 An actor is a python class which handle sentends. By default the ``Dom`` actor is loaded which can handle these sentences:
+
+### DOM - navigation
 - I go on "http://myurl"
 - Take a screenshot
 - I should be on "http://myurl"
@@ -85,16 +86,33 @@ An actor is a python class which handle sentends. By default the ``Dom`` actor i
 - The element "#element" should have "some content" as content
 - The element "#element" should not exists
 - The element "#element" should exists
+-
+### MySQL
+- The row with ":key" equal to ":value" in table ":table:" should exist
+- The row with ":key" equal to ":value" in table ":table:" should not exist
+- The row with ":key" equal to ":value" in table ":table:" has ":other_key" equal to ":new_value"
+- The row with ":key" equal to ":value" in table ":table:" does not exist
+- Then the row with ":key" equal to ":value" in table ":table:" should have ":other_key" equal to ":new_value"
 
+### Rest API
+- I add these headers
+- I prepare a "GET|POST" request to "url" with data
+- I prepare a "GET" request to "url"
+- I send the request
+- Print the last response
+- Print the last json response
+- The json node "aaaa" should exist
+- The json node "aaaa" should not exist
+- The json node "id" should be equal to "1"
+- Then the JSON node "" should have "500" elements
+ 
 If you need or want other sentences, open an issue or create a custom actor :)
 
-To load custom actors, you can add a "Actors" section in your yml file, with all relatives paths to your actors classes:
+To load custom actors, you can add a "Actors" section in your yml file, with all relatives paths (relative to the yaml file) to your actors classes:
 ```yaml
 actors:
     - "../actors/custom_actor.py"
 ```
-
-You can find a sample actor class in the ``actors/custom_actor.py`` file in this repository
 
 ## Known limitations
 - Each feature is session independant: if you are logged in one .feature, you will not be logged in another one

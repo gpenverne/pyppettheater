@@ -3,3 +3,5 @@ asyncio
 gherkin-parser
 pyyaml
 coloredlogs
+pymysql
+requests

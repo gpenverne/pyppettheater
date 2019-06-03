@@ -1,0 +1,6 @@
+parameters:
+    rest:
+        base_endpoint: https://jsonplaceholder.typicode.com
+
+scenarios:
+    0: rest/rest-suite.feature

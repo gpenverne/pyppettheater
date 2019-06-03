@@ -2,6 +2,7 @@
 from pyppeteer import launch
 from gherkin_parser.parser import parse_from_filename, parse_file, parse_lines
 import asyncio, coloredlogs, imp, logging, os, sys, yaml
+from actors import *
 
 class Pyppetheater:
     actors = []
@@ -30,18 +31,21 @@ class Pyppetheater:
                 is_opening_quote = False
                 for word in array:
                     if is_opening_quote:
-                        func_name = func_name.replace(' "'+word+'"', '')
+                        func_name = func_name.replace(' "'+word.lower()+'"', '')
                         args.append(word)
                         is_opening_quote = False
                     else:
                         is_opening_quote = True
 
                 for actor in self.actors:
-                    func_name = func_name.replace(' ', '_')
+                    func_name = func_name.replace(' ', '_').replace(':', '')
                     if not hasattr(actor, func_name):
                         continue
                     try:
                         actor.page = self.page
+                        if step['table']:
+                            args.append(step['table'])
+
                         await getattr(actor, func_name)(*args)
                         self.logger.info('\t✅'+stepTitle)
                         break
@@ -76,11 +80,23 @@ def run_feature_file(theater, feature_file_path):
 def run_yml(yml_path):
     current_dir = os.path.dirname(yml_path)
     theater = Pyppetheater()
-    theater.add_actor(DomActor())
     with open(yml_path, 'r') as stream:
         try:
             tests = []
             theater_config = yaml.safe_load(stream)
+            try:
+                parameters = theater_config['parameters']
+            except:
+                parameters = []
+            theater.add_actor(DomActor(parameters))
+            try:
+                theater.add_actor(MysqlActor(parameters))
+            except:
+                pass
+            try:
+                theater.add_actor(RestActor(parameters))
+            except:
+                pass
             try:
                 actors = theater_config['actors']
             except:
@@ -92,7 +108,6 @@ def run_yml(yml_path):
                 run_feature_file(theater, os.path.join(current_dir, scenario))
 
         except yaml.YAMLError as exc:
-            print(exc)
             quit()
 
 def run_test(scenario_path):
@@ -106,46 +121,5 @@ def run_test(scenario_path):
         run_test(scenario_path)
     else:
         run_yml(scenario_path)
-
-class DomActor():
-    # I go on "http://myurl"
-    async def i_go_on(self, url):
-        await self.page.goto(url)
-
-    # I should be on "http://myurl"
-    async def i_should_be_on(self, url):
-        pageUrl = self.page.url
-        if pageUrl != url:
-            raise Exception ('Url is '+pageUrl+' but '+url+' was expected')
-
-    # I type "something" in field "#query"
-    async def i_type_in_field(self, value, field_query_selector):
-        dom_element = await self.page.querySelector(field_query_selector)
-        await self.page.evaluate('(element) => element.value = \'\'', dom_element)
-        await self.page.focus(field_query_selector)
-        await self.page.keyboard.type(value)
-
-    # I click on "#item"
-    async def i_click_on(self, field_query_selector):
-        dom_element = await self.page.querySelector(field_query_selector)
-        await self.page.evaluate('(btn) => btn.click()', dom_element)
-        await self.page.waitForNavigation({})
-
-    # The element "#element" should have "some content" as content
-    async def the_element_should_have_as_content(self, field_query_selector, content):
-        dom_element = await self.page.querySelector(field_query_selector)
-        text = await self.page.evaluate('(element) => element.textContent', dom_element);
-        if text != content:
-            raise Exception ('Content of '+field_query_selector+' should be "' + str(content) + '", found "'+str(text)+'"')
-
-    # The element "#element" should not exist
-    async def the_element_should_not_exist(self, field_query_selector):
-        if await self.page.querySelector(field_query_selector) != None:
-            raise Exception ('Element "'+field_query_selector+'" has been found in the DOM, but it should not')
-
-    # The element "#element" should exist
-    async def the_element_should_exist(self, field_query_selector):
-        if await self.page.querySelector(field_query_selector) == None:
-            raise Exception ('Element "'+field_query_selector+'" has not been found in the DOM, but it should')
 
 run_test(sys.argv[1])
