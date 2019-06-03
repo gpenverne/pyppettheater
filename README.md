@@ -88,6 +88,19 @@ An actor is a python class which handle sentends. By default the ``Dom`` actor i
 - The element "#element" should exists
 -
 ### MySQL
+#### Configuration
+```yaml
+parameters:
+    mysql:
+        db_host: db
+        db_user: root
+        db_password: root
+        db_name: test
+
+scenarios:
+    0: "mysql/mysql-suite.feature"
+```
+#### Usage
 - The row with ":key" equal to ":value" in table ":table:" should exist
 - The row with ":key" equal to ":value" in table ":table:" should not exist
 - The row with ":key" equal to ":value" in table ":table:" has ":other_key" equal to ":new_value"
@@ -95,6 +108,17 @@ An actor is a python class which handle sentends. By default the ``Dom`` actor i
 - Then the row with ":key" equal to ":value" in table ":table:" should have ":other_key" equal to ":new_value"
 
 ### Rest API
+#### Configuration
+```yaml
+parameters:
+    rest:
+        base_endpoint: https://my-api-endpoint.com
+
+scenarios:
+    0: rest/rest-suite.feature
+
+```
+#### Usage
 - I add these headers
 - I prepare a "GET|POST" request to "url" with data
 - I prepare a "GET" request to "url"
@@ -105,7 +129,7 @@ An actor is a python class which handle sentends. By default the ``Dom`` actor i
 - The json node "aaaa" should not exist
 - The json node "id" should be equal to "1"
 - Then the JSON node "" should have "500" elements
- 
+
 If you need or want other sentences, open an issue or create a custom actor :)
 
 To load custom actors, you can add a "Actors" section in your yml file, with all relatives paths (relative to the yaml file) to your actors classes:

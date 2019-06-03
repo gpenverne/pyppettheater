@@ -2,7 +2,6 @@ import coloredlogs, json, logging, requests
 
 class Actor():
     def __init__(self, parameters):
-        print(parameters)
         self.base_endpoint = parameters['rest']['base_endpoint']
         self.headers = {}
         self.data = []

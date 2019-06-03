@@ -1,0 +1,37 @@
+version: 2
+jobs:
+  build:  # required for runs that don't use workflows
+    working_directory: /var/www
+    docker:
+      - image: gpenverne/pyppettheater:latest
+      - image: mysql:5.7
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_USER: root
+    steps:
+      - run:
+          name: install dockerize
+          command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+          environment:
+            DOCKERIZE_VERSION: v0.3.0
+      - run:
+          name: Wait for db
+          command: dockerize -wait tcp://localhost:3306 -timeout 1m
+      - checkout # checkout source code to working directory
+      - restore_cache:
+          keys:
+            - vendor-{{ checksum "requirements.txt" }}
+      - run:
+          command: |
+              mysql -uroot -proot -h127.0.0.1 < tests/mysql/data.sql
+      - run:
+           name: Functionnals tests
+           command: |
+            cp -R ./tests /scenarios
+            pyppettheater /scenarios/mysql.yml
+            pyppettheater /scenarios/rest.yml
+      - save_cache:
+          key: vendor-{{ checksum "requirements.txt" }}
+          paths:
+            - /root/.cache
+          when: on_success
