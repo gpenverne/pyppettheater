@@ -17,8 +17,9 @@ class Actor():
             value_to_parse = value_to_parse.replace('<'+some_value_to_parse+'>', context_value)
         elif "faker." in some_value_to_parse:
             fake = Faker()
-            context_value = getattr(fake, some_value_to_parse.replace('faker.', ''))()
+            attribute_name = re.sub(r'((.+)?)\<(.+)\:(.+)\>((.+)?)', r'\3', value_to_parse)
+            context_value = getattr(fake, some_value_to_parse.replace('faker.', '').replace(attribute_name+':', ''))()
             value_to_parse = value_to_parse.replace('<'+some_value_to_parse+'>', context_value)
-            self.context[some_value_to_parse.replace('faker.', 'faker_')] = context_value
+            self.context[attribute_name] = context_value
         value_to_parse = re.sub(r'((.+)?)\<(.+)\>((.+)?)', r'\1\3\4', value_to_parse)
         return value_to_parse
