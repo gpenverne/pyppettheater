@@ -19,7 +19,7 @@ jobs:
           command: dockerize -wait tcp://localhost:3306 -timeout 1m
       - checkout # checkout source code to working directory
       - run:
-           name: Functionnals tests
+           name: Functionals tests
            command: |
             mysql -uroot -proot -h127.0.0.1 < tests/mysql/data.sql
             cp -R ./tests /scenarios

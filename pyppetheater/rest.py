@@ -1,6 +1,7 @@
 import coloredlogs, json, logging, requests
+from .global_actor import Actor as GlobalActor
 
-class Actor():
+class Actor(GlobalActor):
     def __init__(self, parameters):
         self.base_endpoint = parameters['rest']['base_endpoint']
         self.headers = {}
@@ -24,7 +25,7 @@ class Actor():
         self.request_method = request_method
         self.data = {}
         for data in request_data:
-            self.data[data['columns'][0]] = data['columns'][1]
+            self.data[data['columns'][0]] = self.parse_value(data['columns'][1])
 
     # I prepare a "GET" request to "url":
     async def i_prepare_a_request_to(self, request_method, url):
@@ -34,15 +35,15 @@ class Actor():
 
     # I send the request
     async def i_send_the_request(self):
-        self.last_response = getattr(requests, self.request_method.lower())(self.url, headers=self.headers, data=self.data)
+        self.context['last_response'] = getattr(requests, self.request_method.lower())(self.url, headers=self.headers, data=self.data)
 
     # Then print the last response
     async def print_the_last_response(self):
-        self.logger.info(self.last_response.content)
+        self.logger.info(self.context['last_response'].content)
 
     # Then print the last json response
     async def print_the_last_json_response(self):
-        self.logger.info(self.last_response.json())
+        self.logger.info(self.context['last_response'].json())
 
     def get_json_node(self, json_data, json_node_name):
         json_node_name = json_node_name.split('.')
@@ -56,19 +57,19 @@ class Actor():
 
     # And the json node "id" should be equal to "1"
     async def the_json_node_should_be_equal_to(self, json_node_name, json_node_value):
-        json_data = self.last_response.json()
+        json_data = self.context['last_response'].json()
         try:
             json_node = self.get_json_node(json_data, json_node_name)
         except:
             await self.print_the_last_json_response()
             raise Exception ('No JSON node "'+json_node_name+' found')
 
-        if str(json_node) != str(json_node_value):
+        if str(json_node) != self.parse_value(str(json_node_value)):
             raise Exception ('The JSON node "'+json_node_name+' is equal to '+str(json_node)+' but '+json_node_value+' expected')
 
     # The json node "aaaa" should exist
     async def the_json_node_should_exist(self, json_node_name):
-        json_data = self.last_response.json()
+        json_data = self.context['last_response'].json()
         try:
             json_node = self.get_json_node(json_data, json_node_name)
         except:
@@ -77,7 +78,7 @@ class Actor():
 
     # The json node "aaaa" should not exist
     async def the_json_node_should_not_exist(self, json_node_name):
-        json_data = self.last_response.json()
+        json_data = self.context['last_response'].json()
         try:
             json_node = self.get_json_node(json_data, json_node_name)
         except:
@@ -87,7 +88,7 @@ class Actor():
 
     # Then the JSON node "" should have "500" elements
     async def the_json_node_should_have_elements(self, json_node_name, nb_elements):
-        json_data = self.last_response.json()
+        json_data = self.context['last_response'].json()
         try:
             if json_node_name == "":
                 json_node = json_data
@@ -102,13 +103,13 @@ class Actor():
 
     # Then the response status code should be 200
     async def the_response_status_code_should_be(self, status_code):
-        if str(self.last_response.status_code) != str(status_code):
-            raise Exception ('Status code is '+str(self.last_response.status_code)+' but '+str(status_code)+' was expected')
+        if str(self.context['last_response'].status_code) != str(status_code):
+            raise Exception ('Status code is '+str(self.context['last_response'].status_code)+' but '+str(status_code)+' was expected')
 
     # The response content-type should be "application/json; charset=utf-8"
     async def the_response_content_type_should_be(self, content_type):
-        if str(self.last_response.headers['content-type']) != str(content_type):
-            raise Exception ('Content type is '+str(self.last_response.headers['content-type'])+' but '+str(content_type)+' was expected')
+        if str(self.context['last_response'].headers['content-type']) != str(content_type):
+            raise Exception ('Content type is '+str(self.context['last_response'].headers['content-type'])+' but '+str(content_type)+' was expected')
 
     # And the JSON nodes should be equal to:
     async def the_json_nodes_should_be_equal_to(self, request_data):

@@ -3,9 +3,9 @@ from distutils.core import setup
 setup(
   name = 'Pyppetheater',
   packages = ['pyppetheater'],
-  version = '0.2.16',
+  version = '0.2.19',
   license='MIT',
-  description = 'Functionnal testing using python and puppeteer',
+  description = 'Functional testing using python and puppeteer',
   author = 'Gregoire Penverne',
   author_email = 'gpenverne@gmail.com',
   url = 'https://github.com/gpenverne/pyppettheater',
@@ -18,7 +18,8 @@ setup(
       'pyyaml',
       'coloredlogs',
       'pymysql',
-      'requests'
+      'requests',
+      'faker'
   ],
   classifiers=[
     'Development Status :: 4 - Beta',

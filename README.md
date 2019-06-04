@@ -146,3 +146,17 @@ actors:
 
 ## Sample scenarios and yml files
 (Tests on this repo)[https://github.com/gpenverne/pyppettheater/tree/master/tests/]
+
+## Contexts & faker
+Using (faker)[https://faker.readthedocs.io/en/latest/providers/faker.providers.automotive.html], you can generate (and set) fake generated values in your tests. For example:
+```gherkin
+	Scenario: We can send POST data using fake generated values
+ 		Given I prepare a "POST" request to "/posts" with data:
+			| title  | <title:faker.name> |
+			| body   | bar			      |
+			| userId | 1			      |
+		When I send the request
+		Then the JSON node "title" should be equal to "<context.title>"
+```
+
+In this exemple, we send data, with a random generated name as title. The syntax ``<var_name:faker.method>`` means you can retrieve the value using the context: ``<context.title>``
