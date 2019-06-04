@@ -35,11 +35,11 @@ Feature: Use the rest test suite
 
 	Scenario: We can send POST data using fake generated values
  		Given I prepare a "POST" request to "/posts" with data:
-			| title  | <faker.name> |
+			| title  | <title:faker.name> |
 			| body   | bar			|
 			| userId | 1			|
 		When I send the request
-		Then the JSON node "title" should be equal to "<context.faker_name>"
+		Then the JSON node "title" should be equal to "<context.title>"
 
     Scenario Outline: We can use scenario outlines
 		Given I prepare a "<method>" request to "<uri>"
