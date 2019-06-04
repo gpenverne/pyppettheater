@@ -67,6 +67,9 @@ class Pyppetheater:
                     continue
                 try:
                     actor.page = self.page
+                    for arg in args:
+                        arg = actor.parse_value(arg)
+
                     if step['table']:
                         args.append(step['table'])
 

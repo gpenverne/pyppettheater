@@ -33,6 +33,14 @@ Feature: Use the rest test suite
 		When I send the request
 		Then the JSON node "title" should be equal to "pyppetheater"
 
+	Scenario: We can send POST data using fake generated values
+ 		Given I prepare a "POST" request to "/posts" with data:
+			| title  | <faker.name> |
+			| body   | bar			|
+			| userId | 1			|
+		When I send the request
+		Then the JSON node "title" should be equal to "<context.faker_name>"
+
     Scenario Outline: We can use scenario outlines
 		Given I prepare a "<method>" request to "<uri>"
         When I send the request

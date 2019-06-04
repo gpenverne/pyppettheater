@@ -18,7 +18,8 @@ setup(
       'pyyaml',
       'coloredlogs',
       'pymysql',
-      'requests'
+      'requests',
+      'faker'
   ],
   classifiers=[
     'Development Status :: 4 - Beta',

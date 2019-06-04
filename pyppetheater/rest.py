@@ -25,7 +25,7 @@ class Actor(GlobalActor):
         self.request_method = request_method
         self.data = {}
         for data in request_data:
-            self.data[data['columns'][0]] = data['columns'][1]
+            self.data[data['columns'][0]] = self.parse_value(data['columns'][1])
 
     # I prepare a "GET" request to "url":
     async def i_prepare_a_request_to(self, request_method, url):
@@ -64,7 +64,7 @@ class Actor(GlobalActor):
             await self.print_the_last_json_response()
             raise Exception ('No JSON node "'+json_node_name+' found')
 
-        if str(json_node) != str(json_node_value):
+        if str(json_node) != self.parse_value(str(json_node_value)):
             raise Exception ('The JSON node "'+json_node_name+' is equal to '+str(json_node)+' but '+json_node_value+' expected')
 
     # The json node "aaaa" should exist
