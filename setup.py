@@ -3,7 +3,7 @@ from distutils.core import setup
 setup(
   name = 'Pyppetheater',
   packages = ['pyppetheater'],
-  version = '0.2.16',
+  version = '0.2.17',
   license='MIT',
   description = 'Functionnal testing using python and puppeteer',
   author = 'Gregoire Penverne',
