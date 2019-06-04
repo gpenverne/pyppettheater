@@ -23,5 +23,6 @@ jobs:
            command: |
             mysql -uroot -proot -h127.0.0.1 < tests/mysql/data.sql
             cp -R ./tests /scenarios
+            pyppet_theater /scenarios/dom.yml
             pyppet_theater /scenarios/rest.yml
             pyppet_theater /scenarios/mysql.yml

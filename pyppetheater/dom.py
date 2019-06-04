@@ -22,6 +22,10 @@ class Actor(GlobalActor):
         await self.page.focus(field_query_selector)
         await self.page.keyboard.type(self.parse_value(value))
 
+    # Take a screenshot
+    async def take_a_screenshot(self):
+        await self.page.screenshot({'path': '/tmp/screenshot.png'})
+
     # I click on "#item"
     async def i_click_on(self, field_query_selector):
         dom_element = await self.page.querySelector(field_query_selector)
