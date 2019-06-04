@@ -2,7 +2,7 @@ import re
 from faker import Faker
 
 class Actor():
-    context = {"prout": "some type"}
+    context = {}
 
     def __init__(self, parameters):
         pass
