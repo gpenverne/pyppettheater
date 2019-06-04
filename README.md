@@ -153,8 +153,8 @@ Using (faker)[https://faker.readthedocs.io/en/latest/providers/faker.providers.a
 	Scenario: We can send POST data using fake generated values
  		Given I prepare a "POST" request to "/posts" with data:
 			| title  | <title:faker.name> |
-			| body   | bar			|
-			| userId | 1			|
+			| body   | bar			      |
+			| userId | 1			      |
 		When I send the request
 		Then the JSON node "title" should be equal to "<context.title>"
 ```
