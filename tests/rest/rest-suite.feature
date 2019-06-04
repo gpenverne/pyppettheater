@@ -9,6 +9,11 @@ Feature: Use the rest test suite
 		And the json node "anythng" should not exist
 		And the json node "userId" should exist
 		And the json node "id" should be equal to "1"
+		And the response status code should be "200"
+		And the response content-type should be "application/json; charset=utf-8"
+		And the json nodes should be equal to:
+			| id	 | 1 |
+			| userId | 1 |
 
 	Scenario: We can count number of items in an array
 		Given I add these headers:
@@ -27,3 +32,12 @@ Feature: Use the rest test suite
 			| userId | 1			|
 		When I send the request
 		Then the JSON node "title" should be equal to "pyppetheater"
+
+    Scenario Outline: We can use scenario outlines
+		Given I prepare a "<method>" request to "<uri>"
+        When I send the request
+        Then the response content-type should be "application/json; charset=utf-8"
+        Examples:
+            | method | uri       |
+            | GET    | /comments |
+            | GET    | /posts    |

@@ -4,11 +4,11 @@ class Actor():
 
     def __init__(self, parameters):
        self.db = pymysql.connect(
-            host=parameters['mysql']['db_host'],
-            user=parameters['mysql']['db_user'],
-            passwd=parameters['mysql']['db_password'],
-            db=parameters['mysql']['db_name']
-        )
+           host=parameters['mysql']['db_host'],
+           user=parameters['mysql']['db_user'],
+           passwd=parameters['mysql']['db_password'],
+           db=parameters['mysql']['db_name']
+       )
 
     # Then the row with ":key" equal to ":value" in table ":table:" should exist
     async def the_row_with_equal_to_in_table_should_exist(self, row_key, row_value, table_name):

@@ -128,6 +128,9 @@ scenarios:
 - The json node "aaaa" should not exist
 - The json node "id" should be equal to "1"
 - Then the JSON node "" should have "500" elements
+- Then the response status code should be "200"
+- Then the response content-type should be "application/json; charset=utf-8"
+- And the json nodes should be equal to:
 
 If you need or want other sentences, open an issue or create a custom actor :)
 

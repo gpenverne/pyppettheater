@@ -14,5 +14,5 @@ RUN unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
 ENV DISPLAY=:99
 
 # install pupeteer dependencies
-RUN sudo /usr/bin/python3.5 -m pip install Pyppetheater
+RUN sudo /usr/bin/python3.5 -m pip install --no-cache-dir Pyppetheater
 RUN pyppeteer-install

@@ -99,3 +99,19 @@ class Actor():
 
         if len(json_node) != int(nb_elements):
             raise Exception ('The JSON node "'+json_node_name+' contain '+str(len(json_node))+' but '+nb_elements+' was expected')
+
+    # Then the response status code should be 200
+    async def the_response_status_code_should_be(self, status_code):
+        if str(self.last_response.status_code) != str(status_code):
+            raise Exception ('Status code is '+str(self.last_response.status_code)+' but '+str(status_code)+' was expected')
+
+    # The response content-type should be "application/json; charset=utf-8"
+    async def the_response_content_type_should_be(self, content_type):
+        if str(self.last_response.headers['content-type']) != str(content_type):
+            raise Exception ('Content type is '+str(self.last_response.headers['content-type'])+' but '+str(content_type)+' was expected')
+
+    # And the JSON nodes should be equal to:
+    async def the_json_nodes_should_be_equal_to(self, request_data):
+        for node in request_data:
+            self.logger.info(node['columns'])
+            await self.the_json_node_should_be_equal_to(node['columns'][0], node['columns'][1])
