@@ -1,6 +1,7 @@
-class Actor():
-    def __init__(self, parameters):
-        pass
+from .global_actor import Actor as GlobalActor
+
+class Actor(GlobalActor):
+
     # I go on "http://myurl"
     async def i_go_on(self, url):
         await self.page.goto(url)
@@ -11,6 +12,8 @@ class Actor():
         if pageUrl != url:
             raise Exception ('Url is '+pageUrl+' but '+url+' was expected')
 
+    async def print_context(self):
+        print(self.context)
     # I type "something" in field "#query"
     async def i_type_in_field(self, value, field_query_selector):
         dom_element = await self.page.querySelector(field_query_selector)

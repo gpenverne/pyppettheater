@@ -1,6 +1,7 @@
 import pymysql
+from .global_actor import Actor as GlobalActor
 
-class Actor():
+class Actor(GlobalActor):
 
     def __init__(self, parameters):
        self.db = pymysql.connect(

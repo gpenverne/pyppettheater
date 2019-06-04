@@ -41,3 +41,6 @@ Feature: Use the rest test suite
             | method | uri       |
             | GET    | /comments |
             | GET    | /posts    |
+
+	Scenario: We can use shared context
+		Given print context

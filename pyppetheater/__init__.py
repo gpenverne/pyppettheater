@@ -5,10 +5,13 @@ import asyncio, coloredlogs, imp, logging, os, sys, yaml
 from .dom import Actor as DomActor
 from .mysql import Actor as MysqlActor
 from .rest import Actor as RestActor
+from .global_actor import Actor as GlobalActor
 import copy
 
 class Pyppetheater:
     actors = []
+    context = {}
+
     def __init__(self):
         self.page = None
         self.logger = logging.getLogger(__name__)
@@ -66,6 +69,8 @@ class Pyppetheater:
                     actor.page = self.page
                     if step['table']:
                         args.append(step['table'])
+
+                    actor.set_context(self.context)
 
                     await getattr(actor, func_name)(*args)
                     self.logger.info('\t✅'+stepTitle)
