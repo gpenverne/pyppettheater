@@ -14,12 +14,13 @@ class Actor(GlobalActor):
 
     async def print_context(self):
         print(self.context)
+
     # I type "something" in field "#query"
     async def i_type_in_field(self, value, field_query_selector):
         dom_element = await self.page.querySelector(field_query_selector)
         await self.page.evaluate('(element) => element.value = \'\'', dom_element)
         await self.page.focus(field_query_selector)
-        await self.page.keyboard.type(value)
+        await self.page.keyboard.type(self.parse_value(value))
 
     # I click on "#item"
     async def i_click_on(self, field_query_selector):
@@ -31,8 +32,8 @@ class Actor(GlobalActor):
     async def the_element_should_have_as_content(self, field_query_selector, content):
         dom_element = await self.page.querySelector(field_query_selector)
         text = await self.page.evaluate('(element) => element.textContent', dom_element);
-        if text != content:
-            raise Exception ('Content of '+field_query_selector+' should be "' + str(content) + '", found "'+str(text)+'"')
+        if text != self.parse_value(content):
+            raise Exception ('Content of '+field_query_selector+' should be "' + self.parse_value(str(content)) + '", found "'+str(text)+'"')
 
     # The element "#element" should not exist
     async def the_element_should_not_exist(self, field_query_selector):
